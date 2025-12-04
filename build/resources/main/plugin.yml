@@ -1,0 +1,17 @@
+name: RPG-Plugin
+version: '1.0-SNAPSHOT'
+main: fr.rabio.rPGPlugin.RPGPlugin
+api-version: '1.21'
+authors: [ Rabio15 ]
+description: Pluginn rpg
+commands:
+  level:
+    description: Permet de gerer le niveau des compétence des joueur.
+    usage: /level
+  xp:
+    description: Permet de gerer l'xp
+    usage: /xp
+
+  competence:
+    description: Permet de connaitre ces competences
+    usage: /competence [Competence]
