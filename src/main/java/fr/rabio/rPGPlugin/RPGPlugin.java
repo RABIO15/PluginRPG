@@ -3,11 +3,8 @@ package fr.rabio.rPGPlugin;
 import Commande.Competence;
 import Commande.Level;
 import Commande.Xp;
-import Niveau.Agriculture;
-import Niveau.Builder;
-import Niveau.Combat;
+import Niveau.*;
 
-import Niveau.Minage;
 import Sauvegarde.Connection;
 import Sauvegarde.Mysql;
 import org.bukkit.event.Listener;
@@ -24,14 +21,15 @@ public final class RPGPlugin extends JavaPlugin implements Listener {
         // Plugin startup logic
 
         Connection connection = new Connection(this);
+        Compétence_Niveaux competence = new Compétence_Niveaux(this,connection);
         getServer().getPluginManager().registerEvents(new Connection(this), this);
         getCommand("level").setExecutor(new Level(this));
         getCommand("xp").setExecutor(new Xp(this));
         getCommand("competence").setExecutor(new Competence(this));
         getServer().getPluginManager().registerEvents(new Combat(this,connection), this);
-        getServer().getPluginManager().registerEvents(new Minage(this,connection),this);
-        getServer().getPluginManager().registerEvents(new Agriculture(this,connection),this);
-        getServer().getPluginManager().registerEvents(new Builder(this,connection),this);
+        getServer().getPluginManager().registerEvents(new Minage(this,connection,competence),this);
+        getServer().getPluginManager().registerEvents(new Agriculture(this,connection,competence),this);
+        getServer().getPluginManager().registerEvents(new Builder(this,connection,competence),this);
 
 
 

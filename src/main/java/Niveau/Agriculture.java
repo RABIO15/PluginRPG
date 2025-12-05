@@ -24,12 +24,13 @@ public class Agriculture implements Listener {
 
 RPGPlugin main;
 Connection connection;
+Compétence_Niveaux competence;
 
 
-public Agriculture(RPGPlugin main,Connection connection){
+public Agriculture(RPGPlugin main,Connection connection, Compétence_Niveaux competence){
     this.main = main;
     this.connection = connection;
-
+    this.competence = competence;
     }
 
 
@@ -44,8 +45,8 @@ public Agriculture(RPGPlugin main,Connection connection){
                 p.sendMessage("Tu as récolté du blé mature !");
 
 
+                competence._ADD_(p,"Agriculture","Agriculture.yml", b.getType());
 
-                _ADD_(p,b);
 
 
 
@@ -60,8 +61,10 @@ public Agriculture(RPGPlugin main,Connection connection){
     @EventHandler
     public void onFertilize(BlockFertilizeEvent e) {
         Player p = e.getPlayer();
+        Block b = e.getBlock();
+
         p.sendMessage("Tu as utilisé de l’engrais !");
-        _ADD_(p,"Fertiliser");
+        competence._ADD_(p,"Agriculture","Agriculture.yml", b.getType());
     }
 
 
@@ -73,159 +76,11 @@ public Agriculture(RPGPlugin main,Connection connection){
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (e.getItem() != null && e.getItem().getType() == Material.WHEAT_SEEDS) {
                 e.getPlayer().sendMessage("Tu as planté une graine !");
-                _ADD_((Player) e,"Planter");
+                competence._ADD_(e.getPlayer(),"Agriculture","Agriculture.yml", Material.WHEAT_SEEDS);
             }
         }
     }
 
-    public void _ADD_(Player player, Block matos) {
-
-        //on va faire un fichier yml qui va Stoker tous les mob du jeux
-        File file = new File(main.getDataFolder(), "Agriculture.yml");
-
-        if (!main.getDataFolder().exists()) {
-            main.getDataFolder().mkdirs();
-        }
-
-
-        if (!file.exists()) {
-            main.getLogger().warning("Le fichier Agriculture.yml n'existe pas !");
-
-
-            try {
-                file.createNewFile();
-                main.getLogger().info("Fichier Agriculture.yml créé (vide) !");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-
-        String type = matos.toString();// va juste recupéré le nom du block !
-
-        // Vérifie si le type existe dans le YAML
-        if (!config.contains(type)) {
-            main.getLogger().warning("Agriculture  inconnu dans le YAML: " + type);
-            return;
-        }
-
-
-        //on va recupérer le tyype du mob si c'est un zombie ou un skellete etc..
-        ConfigurationSection section = config.getConfigurationSection(type);
-        if (section == null) return;
-
-        //on va faire un boucle qui va rrecuperer tous les nom que le Mobs peut avoir
-        for (String key : section.getKeys(false)) {
-
-
-
-            if (type.equalsIgnoreCase(key)) {
-
-
-                int exp = section.getInt(key + ".exp");
-
-
-
-                connection.Ajouter(player.getUniqueId(), exp, "xp", "Agriculture", player);
-
-
-
-                player.sendMessage("§4 la plante casser vous rapporte  " + "§5" + exp);
-                player.sendMessage("                 ");
-                player.sendMessage(ChatColor.AQUA + "Votre Xp à été mis à jour ! ");
-
-
-
-                connection.recupererCompetence(player);
-
-
-            }
-
-        }
-
-
-    }
-
-
-    public void _ADD_(Player player,String type) {
-
-        //on va faire un fichier yml qui va Stoker tous les mob du jeux
-        File file = new File(main.getDataFolder(), "Agriculture.yml");
-
-        if (!main.getDataFolder().exists()) {
-            main.getDataFolder().mkdirs();
-        }
-
-
-        if (!file.exists()) {
-            main.getLogger().warning("Le fichier Agriculture.yml n'existe pas !");
-
-
-            try {
-                file.createNewFile();
-                main.getLogger().info("Fichier Agriculture.yml créé (vide) !");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-
-       // va juste recupéré le nom du block !
-
-        // Vérifie si le type existe dans le YAML
-        if (!config.contains(type)) {
-            main.getLogger().warning("Agriculture  inconnu dans le YAML: " + type);
-            return;
-        }
-
-
-        //on va recupérer le tyype du mob si c'est un zombie ou un skellete etc..
-        ConfigurationSection section = config.getConfigurationSection(type);
-        if (section == null) return;
-
-        //on va faire un boucle qui va rrecuperer tous les nom que le Mobs peut avoir
-        for (String key : section.getKeys(false)) {
-
-
-
-            if (type.equalsIgnoreCase(key)) {
-
-
-                int exp = section.getInt(key + ".exp");
-
-                player.sendMessage("                                                                                                                      ");
-                player.sendMessage("_____________________________");
-                player.sendMessage(ChatColor.DARK_AQUA + " Vous avez tuer un(e) " + ChatColor.GOLD + type + ChatColor.DARK_AQUA + " de type " + ChatColor.GOLD + type);
-                player.sendMessage("_____________________________");
-                player.sendMessage("                                                                                                                      ");
-
-
-                connection.Ajouter(player.getUniqueId(), exp, "xp", "Agriculture", player);
-
-                if(type.equalsIgnoreCase("Fertiliser")) {
-                    player.sendMessage("§4 la plante fertiliser vous rapporte  " + "§5" + exp);
-                    player.sendMessage("                 ");
-                    player.sendMessage(ChatColor.AQUA + "Votre Xp à été mis à jour ! ");
-                }else{
-
-                    player.sendMessage("§4 la plante planter  vous rapporte  " + "§5" + exp);
-                    player.sendMessage("                 ");
-                    player.sendMessage(ChatColor.AQUA + "Votre Xp à été mis à jour ! ");
-
-                }
-
-
-                connection.recupererCompetence(player);
-
-
-            }
-
-        }
-
-
-    }
 
 
 
