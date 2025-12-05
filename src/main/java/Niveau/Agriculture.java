@@ -11,6 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFertilizeEvent;
@@ -19,14 +20,15 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import java.io.File;
 import java.io.IOException;
 
-public class Agriculture {
+public class Agriculture implements Listener {
 
 RPGPlugin main;
 Connection connection;
 
 
-public Agriculture(RPGPlugin main){
+public Agriculture(RPGPlugin main,Connection connection){
     this.main = main;
+    this.connection = connection;
 
     }
 
@@ -126,6 +128,7 @@ public Agriculture(RPGPlugin main){
 
 
                 connection.Ajouter(player.getUniqueId(), exp, "xp", "Agriculture", player);
+
 
 
                 player.sendMessage("§4 la plante casser vous rapporte  " + "§5" + exp);

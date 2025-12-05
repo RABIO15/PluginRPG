@@ -10,13 +10,14 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import java.io.File;
 import java.io.IOException;
 
-public class Builder {
+public class Builder implements Listener {
 
 
 
@@ -24,10 +25,11 @@ public class Builder {
     Connection connection;
 
 
-    public Builder(RPGPlugin main){
+    public Builder(RPGPlugin main,Connection connection){
 
 
        this.main = main;
+       this.connection = connection;
 
 
 

@@ -3,7 +3,11 @@ package fr.rabio.rPGPlugin;
 import Commande.Competence;
 import Commande.Level;
 import Commande.Xp;
+import Niveau.Agriculture;
+import Niveau.Builder;
 import Niveau.Combat;
+
+import Niveau.Minage;
 import Sauvegarde.Connection;
 import Sauvegarde.Mysql;
 import org.bukkit.event.Listener;
@@ -11,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 
 public final class RPGPlugin extends JavaPlugin implements Listener {
 
@@ -24,6 +29,25 @@ public final class RPGPlugin extends JavaPlugin implements Listener {
         getCommand("xp").setExecutor(new Xp(this));
         getCommand("competence").setExecutor(new Competence(this));
         getServer().getPluginManager().registerEvents(new Combat(this,connection), this);
+        getServer().getPluginManager().registerEvents(new Minage(this,connection),this);
+        getServer().getPluginManager().registerEvents(new Agriculture(this,connection),this);
+        getServer().getPluginManager().registerEvents(new Builder(this,connection),this);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         Mysql.connect();
 
         PreparedStatement ps = null;

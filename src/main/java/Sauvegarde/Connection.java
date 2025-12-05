@@ -314,6 +314,8 @@ public class Connection implements Listener {
 
 
         try {
+
+
             PreparedStatement ps_xp = Mysql.getConnection()
                     .prepareStatement("UPDATE joueurs_competences SET " + selection + " = "  + selection + " + ? WHERE UUID = ? AND competence = ?");
             ps_xp.setInt(1, ajout);
@@ -323,12 +325,15 @@ public class Connection implements Listener {
             System.out.println("Ajout effectuer");
             String message = "Fonction Ajouter Classe Connection";
 
-             //recuperer(player, selection, competence,true,message);
-            Remiseexp(player,"xp",competence,"");
+             recuperer(player, selection, competence,true,"");
+
+
+          //  Remiseexp(player,"xp",competence,"");
 
 
 
         } catch (SQLException e) {
+            player.sendMessage("ERREUR à la con !");
             throw new RuntimeException(e);
         }
 
