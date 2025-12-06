@@ -4,6 +4,7 @@ import Sauvegarde.Connection;
 import fr.rabio.rPGPlugin.RPGPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 
 import org.bukkit.block.data.Ageable;
@@ -72,11 +73,18 @@ public Agriculture(RPGPlugin main,Connection connection, Compétence_Niveaux com
     @EventHandler
     public void onPlant(PlayerInteractEvent e) {
 
-
+        if (e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (e.getItem() != null && e.getItem().getType() == Material.WHEAT_SEEDS) {
-                e.getPlayer().sendMessage("Tu as planté une graine !");
-                competence._ADD_(e.getPlayer(),"Agriculture","Agriculture.yml", Material.WHEAT_SEEDS);
+                if (e.getClickedBlock().getType() == Material.FARMLAND) {
+                    e.getPlayer().sendMessage("§2 Tu as planté une graine !");
+                   // e.getPlayer().playSound(Sound.ENTITY_COW_MILK,);
+                    competence._ADD_(e.getPlayer(), "Agriculture", "Agriculture.yml", Material.WHEAT_SEEDS);
+                }else{
+
+                    e.getPlayer().sendMessage("§4 Tu essaies de faire quoi avec ta graine enculer ?");
+                    
+                }
             }
         }
     }

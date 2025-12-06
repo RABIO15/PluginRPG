@@ -136,7 +136,9 @@ public class Combat  implements Listener {
                 //String message = "Fonction ADD Classe Combat";
 
 
-                connection.recupererCompetence(player);
+                //connection.recupererCompetence(player);
+
+                connection.recuperer_1_Competence(player,"Combat");
 
 
 

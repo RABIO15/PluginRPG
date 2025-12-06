@@ -50,7 +50,7 @@ public class Minage implements Listener {
 
 
 
-            player.sendMessage("§2 Vous avez casser de la pierre ");
+
 
 
 

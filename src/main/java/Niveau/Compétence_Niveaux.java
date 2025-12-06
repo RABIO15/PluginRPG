@@ -59,7 +59,7 @@ public class Compétence_Niveaux implements Listener {
                 e.printStackTrace();
             }
         }
-        //player.sendMessage("YamlConfiguration Minage ");
+
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         //player.sendMessage("YamlConfiguration Minage Après ");
@@ -95,7 +95,7 @@ public class Compétence_Niveaux implements Listener {
 
 
 
-        connection.recupererCompetence(player);
+        connection.recuperer_1_Competence(player,competence);
 
 
     }

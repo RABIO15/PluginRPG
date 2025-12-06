@@ -64,7 +64,7 @@ la ce qu'il faut faire c'est tester le truc si dessous que je vien de faire
 
                     if(args[0].equalsIgnoreCase("ALL") && args[1].equalsIgnoreCase("ALL")){
 
-                        String list[] = {"Agriculture","Combat","Exploration","Global","Minage"};
+                        String list[] = {"Agriculture","Combat","Build","Global","Minage"};
 
                         for(String boucle : list){
                             player.sendMessage("§8 COMPETENCE : " + boucle);

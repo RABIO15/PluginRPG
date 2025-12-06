@@ -217,7 +217,7 @@ public class Connection implements Listener {
                             "INSERT INTO joueurs_competences (uuid, pseudo, competence, level,xp) VALUES (?, ?, ?, ?,?) " +
                                     "ON DUPLICATE KEY UPDATE level = VALUES(level), xp = VALUES(xp)"
                     );
-                    String list[] = {"Agriculture","Combat","Exploration","Global","Minage"};
+                    String list[] = {"Agriculture","Combat","Build","Global","Minage"};
 
                     for(String i : list) {
 
@@ -259,7 +259,7 @@ public class Connection implements Listener {
         Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
             int niveau = 0;
             int xp = 0;
-            String competence[] = {"Agriculture","Combat","Exploration","Global","Minage"};
+            String competence[] = {"Agriculture","Combat","Build","Global","Minage"};
 
 
             for(String i : competence) {
@@ -303,6 +303,52 @@ public class Connection implements Listener {
 
 
 
+    public void recuperer_1_Competence(Player player, String competence) {
+        Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
+            int niveau = 0;
+            int xp = 0;
+
+
+
+
+                try {
+
+                    PreparedStatement ps = Mysql.getConnection().prepareStatement(
+                            "SELECT level,xp FROM joueurs_competences WHERE uuid = ? AND competence = ?"
+                    );
+                    ps.setString(1, player.getUniqueId().toString());
+                    ps.setString(2, competence);
+
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next()) {
+                        niveau = rs.getInt("level");
+                        xp = rs.getInt("xp");
+
+
+                    }
+
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                int finallevel = niveau;
+                int xpFinal = xp;
+                Bukkit.getScheduler().runTask(main, () -> {
+                    player.sendMessage("  ");
+                    player.sendMessage("§6 " + competence + " → Niveaux: " + finallevel + " | XP: " + xpFinal);
+                    player.sendMessage("  ");
+
+
+
+                });
+
+
+
+        });
+
+
+    }
 
 
 
