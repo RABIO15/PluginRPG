@@ -140,6 +140,9 @@ public class Json {
                 else {
                     boolean abilities_modes = abilities.get(ability).getAsBoolean();
                     player.sendMessage("§2 l'ability :  " + ability + " est en mode : " + abilities_modes);
+
+                return abilities_modes;
+
                 }
 
                 return true;

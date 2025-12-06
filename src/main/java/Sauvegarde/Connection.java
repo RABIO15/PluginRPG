@@ -467,7 +467,8 @@ public class Connection implements Listener {
 
     public void Remiseexp(Player player, String xp, String Competence, String Message_bug) {
 
-
+        Json json = new Json(main);
+        Compétence COM = new Compétence(main,this,json);
 
         Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
             int recuperer = 0;
@@ -506,14 +507,14 @@ public class Connection implements Listener {
             }
 
 
-            unity = recuperer;
-            Big_Stokage = stokage;
+            unity = recuperer; //coresponnd au nobre de exp que le joueur à
+            Big_Stokage = stokage; // corespond au level
 
             Bukkit.getScheduler().runTask(main, () -> {
 
                 int Limite_Level = Stat_xp_Level(player, Big_Stokage);
 
-                if(unity >= Limite_Level){
+                if(unity >= Limite_Level){ //la il verifie  le nnombre de xp depasser la limite imposer bah bim
 
 
                     player.sendMessage("                         ");
@@ -564,6 +565,7 @@ public class Connection implements Listener {
 
                         if(unity >= Limite_Level){
                             player.sendMessage("§4 On doit repasser un coup  " + unity);
+
                             Remiseexp(player,"xp",Competence,"C'est la fonction recurisif");
 
                         }
@@ -571,14 +573,6 @@ public class Connection implements Listener {
 
 
 
-                    /*
-                        if(unity < 100){
-
-                            Ajouter(player.getUniqueId(),unity,"xp",Competence,player);
-                            player.sendMessage("§9 JE VIEN E APPELER LA FONCTION AJOUTER " + unity);
-                        }
-
-*/
 
 
                         System.out.println("LE unity avant est  : " + unity );
@@ -586,29 +580,7 @@ public class Connection implements Listener {
 
 
 
-//  private void Remiseexp(Player player, String xp, String Competence,String Message_bug) {
 
-                /*
-
-                Mis a jour 24/10/25
-
-                Truc à faire pour la prochaine fois :
-                faire en sorte que quand le joueur à plus de 100 xp genre exemple 460
-                bah ça enveleve 100 xp et ça lui ajoute un niveaux jusqua qu'il a plus d'exp et garder le
-                reste pour lajouter aussi faire un system de niveau par a port à lexp car la on passe au niveau suivant
-                quand on a plus de 100 xp mais truc qui serait bien ça serait que quand on est certain niveau ça augmente
-                genre
-
-                niveau 1 = 100xp
-
-                niveaux 2 = 125 xp
-
-                niveaux 3 = 175 xp etc.. etc..
-
-
-
-
-                 */
 
 
 
@@ -619,12 +591,24 @@ public class Connection implements Listener {
 
 
                     player.sendMessage("§7 Vous changer de niveaux !");
+                    //fonction pour debloquer une compétence ou non
+                    Big_Stokage += 1;
+                    COM.Deblocage_Competence_Special(player,Competence,Big_Stokage);
+                    Big_Stokage -= 1;
+
+                    /*
+                    Le Big_Stokage += 1; et Big_Stokage -= 1; permet de mettre a niveau le niveau parce que
+                    il n'est pas mis aniveau au niveau de la variable donc ce qui fait que on mais dans la fonction l'ancien niveau
+                    donc je fait ça après je mais -= 1 pour évité potentiel bug après !
+
+
+                     */
 
 
 
 
                 }else{
-                    player.sendMessage("§6Vous avez §e" + unity + "§6 d'xpouill  !.");
+                    player.sendMessage("§6Vous avez §e" + unity + "§6 d'xp  !.");
 
 
 
@@ -794,7 +778,7 @@ public class Connection implements Listener {
 
 
                     baseJson.addProperty(key, false);
-                    player.sendMessage("BOUCLE !");
+
 
                 }
 
@@ -809,7 +793,7 @@ public class Connection implements Listener {
 
                 insert.setString(6, baseJson.toString());
                 insert.executeUpdate();
-                player.sendMessage("fin ?!");
+
 
                 player.sendMessage("✅ Compétence créée pour " + player.getName());
             }else{
