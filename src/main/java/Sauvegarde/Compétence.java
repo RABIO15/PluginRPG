@@ -2,10 +2,15 @@ package Sauvegarde;
 
 import fr.rabio.rPGPlugin.RPGPlugin;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
 import java.io.IOException;
@@ -110,14 +115,19 @@ public class Compétence {
 
                     if(exp == level){
 // variable et vérification que on a dejà pas la compétence
-                        boolean verif_déjà_aquis = json.Get_Competence_Json(player,Competence,key);
 
-                        if(!verif_déjà_aquis){
+
+                        if(!Check_Competence(key,Competence,player)){
 
                             json.setCompetence_Json(player,Competence,key,true);
                             //on donne la compétence
 
                             player.sendMessage("§2 Vous avez debloquer la compétence : " + key);
+
+                            Item_Competence_Give(player,key);
+
+
+
 
                         }else{
                             player.sendMessage("§4 Vous avez déjà la compétence : " + key);
@@ -160,12 +170,99 @@ public class Compétence {
 
 
 
+    public boolean Check_Competence(String key,String Competence,Player player){
+
+        boolean verif_déjà_aquis = json.Get_Competence_Json(player,Competence,key);
+
+            return verif_déjà_aquis;
+    }
+
+
+public void Item_Competence_Give(Player player,String Competence_Unlock){
+
+    switch (Competence_Unlock){
+
+        case "Rage_Mode":
+
+            Create_Object_Give(player,Material.NETHER_STAR,"§9RAGE_MODE");
+
+            break;
+
+        case "Avegmi":
+
+            Create_Object_Give(player, Material.ENDER_EYE,"§6Avegmi");
+
+            break;
+
+
+
+        case "Boumbaa":
+
+            Create_Object_Give(player,Material.BRICKS,"§4BOUMBAA_MODE");
+
+            break;
 
 
 
 
 
+
+        default:
+            player.sendMessage( ChatColor.DARK_AQUA+ "nadale RIEN");
+            break;
+
+    }
 
 
 
 }
+
+public void Admin_Give_Item(Player player){
+
+    Create_Object_Give(player,Material.NETHER_STAR,"§9RAGE_MODE");
+    Create_Object_Give(player, Material.ENDER_EYE,"§6Avegmi");
+    Create_Object_Give(player,Material.BRICKS,"§4BOUMBAA_MODE");
+
+    player.sendMessage("§2 Cheat ONLY :)");
+
+
+}
+
+
+
+public void Create_Object_Give(Player player, Material material,String name){
+
+    ItemStack item = new ItemStack(material);
+    ItemMeta item_meta = item.getItemMeta();
+    item_meta.setDisplayName(name);
+    item_meta.addEnchant(Enchantment.AQUA_AFFINITY,1,false);
+    item_meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+    item.setItemMeta(item_meta);
+if(!inventaire_full(player)) {
+    player.sendMessage("§2 youpiii ! ");
+    player.getInventory().addItem(item);
+}else{
+
+    player.sendMessage("§5 Item jeter car inventaire full");
+    player.getWorld().dropItemNaturally(player.getLocation(), item);
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+    public boolean inventaire_full(Player player) {
+        return player.getInventory().firstEmpty() == -1;
+    }
+
+}
+
+

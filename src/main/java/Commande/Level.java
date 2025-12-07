@@ -30,52 +30,12 @@ public class Level implements CommandExecutor {
 
             if (args.length >= 1) {
 
+                try {
+                    connection.recuperer_1_Competence(player, args[0]);
 
-                    if (args[0].equalsIgnoreCase("retirer")) {
-
-
-                        if (args.length >= 3) {
-
-                        connection.Retirer(player.getUniqueId(), Integer.parseInt(args[1]),"level",args[2]);
-                        player.sendMessage("§6 Le Niveau  de la compétence : " + args[2] + " §6 à été mis a jour");
-                         connection.recupererCompetence(player);
-                            return true;
-
-                        }else{
-
-                            player.sendMessage("Veuillez mettre une valeur ");
-
-
-                        }
-
-
-                        return true;
-                    }
-
-                    if (args[0].equalsIgnoreCase("ajouter")) {
-
-
-                        if (args.length >= 3) {
-
-
-                            connection.Ajouter(player.getUniqueId(), Integer.parseInt(args[1]),"level",args[2],player);
-                            player.sendMessage("§6 Le Niveau  de la compétence : " + args[2] + " §6 à été mis a jour");
-                            connection.recupererCompetence(player);
-                            return true;
-
-                        }else{
-
-                            player.sendMessage("Veuillez mettre une valeur ");
-
-
-                        }
-
-
-                        return true;
-                    }
-
-
-
+                } catch (Exception e) {
+                    player.sendMessage("§4 La compétence demander n'est pasd valide ou n'existe pas !");
+                }
 
 
 

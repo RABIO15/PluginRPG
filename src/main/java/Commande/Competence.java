@@ -44,20 +44,7 @@ la ce qu'il faut faire c'est tester le truc si dessous que je vien de faire
 
 
  */
-            if (args.length >= 3) {
 
-
-                if (args[2].equalsIgnoreCase("true")) {
-                    json.setCompetence_Json(player, args[0].toString(), args[1].toString(), true);
-
-
-                } else if (args[2].equalsIgnoreCase("false")) {
-
-                    json.setCompetence_Json(player, args[0].toString(), args[1].toString(), false);
-
-
-                }
-            }
             if (args.length >= 2) {
 
                     player.sendMessage("§8 Recupération en cours.... ");

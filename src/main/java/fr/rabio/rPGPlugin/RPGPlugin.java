@@ -1,8 +1,10 @@
 package fr.rabio.rPGPlugin;
 
+import Commande.AdminCommande;
 import Commande.Competence;
 import Commande.Level;
 import Commande.Xp;
+import Compétence.Combat_Compétence;
 import Niveau.*;
 
 import Sauvegarde.Connection;
@@ -26,11 +28,20 @@ public final class RPGPlugin extends JavaPlugin implements Listener {
         getCommand("level").setExecutor(new Level(this));
         getCommand("xp").setExecutor(new Xp(this));
         getCommand("competence").setExecutor(new Competence(this));
+        getCommand("opcompetence").setExecutor(new AdminCommande(this));
+        getCommand("opxp").setExecutor(new AdminCommande(this));
+        getCommand("oplevel").setExecutor(new AdminCommande(this));
+        getCommand("allcompetence").setExecutor(new AdminCommande(this));
+
+
+
+
+
         getServer().getPluginManager().registerEvents(new Combat(this,connection), this);
         getServer().getPluginManager().registerEvents(new Minage(this,connection,competence),this);
         getServer().getPluginManager().registerEvents(new Agriculture(this,connection,competence),this);
         getServer().getPluginManager().registerEvents(new Builder(this,connection,competence),this);
-
+        getServer().getPluginManager().registerEvents(new Combat_Compétence(this,connection),this);
 
 
 

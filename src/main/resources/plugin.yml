@@ -15,3 +15,19 @@ commands:
   competence:
     description: Permet de connaitre ces competences
     usage: /competence [Competence]
+
+  allcompetence:
+    description: Commande admin qui permet de aquerire tous les item des compétence
+    usage: /allcompetence
+
+  oplevel:
+    description: Commande admine qui permet de gerer le niveau des compétence des joueur.
+    usage: /oplevel
+
+  opxp:
+    description: Permet de gerer l'xp
+    usage: /opxp
+
+  opcompetence:
+    description: Commande admin qui permet de gerer les coméptence
+    usage: /opcompetence

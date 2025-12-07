@@ -107,7 +107,7 @@ public class Xp implements CommandExecutor {
 
 
             if (args.length == 1) {
-                String message = "Commandee Ajouter ";
+
 
                 try {
                     //connection.recuperer(player, "xp", args[0],false,message);
