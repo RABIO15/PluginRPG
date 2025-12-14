@@ -2,6 +2,7 @@ package Commande;
 
 import Sauvegarde.Compétence;
 import Sauvegarde.Connection;
+import Sauvegarde.CooldownManager;
 import Sauvegarde.Json;
 import fr.rabio.rPGPlugin.RPGPlugin;
 import org.bukkit.ChatColor;
@@ -37,6 +38,33 @@ public class AdminCommande implements CommandExecutor {
 
 
                 compétence.Admin_Give_Item(player);
+                return true;
+
+            }
+
+
+
+            if (label.equals("annulation")) {
+
+
+
+
+                if (args.length >= 1) {
+                    try {
+                        CooldownManager.removeCooldown(player.getUniqueId(), args[0]);
+                    } catch (RuntimeException e) {
+                        player.sendMessage("§c il s'est produit un soucis par a port à l'annulation");
+                        player.sendMessage("§c le args utiliser est " +  args[0]);
+
+                    }
+
+                }else{
+
+                    player.sendMessage("§c Veuillez mettre la conpétence que vous voulez annulez !" );
+
+                }
+
+
                 return true;
 
             }

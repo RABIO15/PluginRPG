@@ -32,6 +32,7 @@ public final class RPGPlugin extends JavaPlugin implements Listener {
         getCommand("opxp").setExecutor(new AdminCommande(this));
         getCommand("oplevel").setExecutor(new AdminCommande(this));
         getCommand("allcompetence").setExecutor(new AdminCommande(this));
+        getCommand("annulation").setExecutor(new AdminCommande(this));
 
 
 
