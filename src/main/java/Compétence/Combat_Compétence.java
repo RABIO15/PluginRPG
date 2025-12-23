@@ -1,9 +1,6 @@
 package Compétence;
 
-import Sauvegarde.Compétence;
-import Sauvegarde.Connection;
-import Sauvegarde.CooldownManager;
-import Sauvegarde.Json;
+import Sauvegarde.*;
 import fr.rabio.rPGPlugin.RPGPlugin;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -25,7 +22,7 @@ public class Combat_Compétence implements Listener {
 
     RPGPlugin main;
     Connection connection;
-    Boolean aveugmi;
+
 
 
     public Combat_Compétence(RPGPlugin main, Connection connection) {
@@ -39,36 +36,41 @@ public class Combat_Compétence implements Listener {
     @EventHandler
     public void Rage_modes(PlayerInteractEvent event) {
 
-        Json json = new Json(main);
+
         Player player = event.getPlayer();
 
-        Compétence compétence = new Compétence(main, connection, json);
 
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (event.getItem() != null && event.getItem().getType() == Material.NETHER_STAR) {
+        Constructor_Compétence constructorCompétence = new Constructor_Compétence(main,connection);
 
+        if(constructorCompétence.constructor_start_RIGHT(event,"§9RAGE_MODE","Rage_modes","Combat",Material.NETHER_STAR)) {
+            CooldownManager.handleCooldown(player, "Rage_modes", () -> {
+                RAGEMODE_EFFECT(player);
+            });
 
-                if (event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§9RAGE_MODE")) {
+            Mana mana = new Mana(main);
 
-                    if (event.getItem().getItemMeta().hasEnchants()) {
-                        if (compétence.Check_Competence("Rage_modes", "Combat", event.getPlayer())) {
-                            CooldownManager.handleCooldown(player, "Rage_modes", () -> {
-                                RAGEMODE_EFFECT(player);
-                            });
+           mana.cooldownMana(player);
+           player.sendMessage("§2 votre manna est de :  " + mana.GetMana(player));
 
-
-                        }
-                    }
-
-                }
-
-
-            }
 
 
         }
 
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
 
     @EventHandler
     public void Avegmi_modes(PlayerInteractEvent event) {
@@ -80,65 +82,27 @@ public class Combat_Compétence implements Listener {
 
 
 
-
-
-
-        Json json = new Json(main);
-        Compétence compétence = new Compétence(main, connection, json);
-        if (event.getItem() != null && event.getItem().getType() == Material.ENDER_EYE) {
-            //event.setUseItemInHand(Event.Result.DENY);
-
-            Action action = event.getAction();
-            if (event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6Avegmi")) {
-                if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
-                    event.setCancelled(true);
-                    player.sendMessage("§4 Click droit interdit !");
-                    return; // 🔥 SUPER IMPORTANT
-                }
-
-
-            }
+        Constructor_Compétence constructorCompétence = new Constructor_Compétence(main,connection);
+        if(constructorCompétence.constructor_start_LEFT(event,"§6Avegmi","Avegmi","Combat", Material.ENDER_EYE)) {
+            event.setUseItemInHand(Event.Result.DENY);
+            CooldownManager.handleCooldown(player, "Avegmi", () -> {
+                AVEUGMI(player);
+            });
 
         }
-
-
-
-                if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-                    if (event.getItem() != null && event.getItem().getType() == Material.ENDER_EYE) {
-
-
-                        if (event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6Avegmi")) {
-
-
-                            if (event.getItem().getItemMeta().hasEnchants()) {
-
-
-                                if (compétence.Check_Competence("Avegmi", "Combat", event.getPlayer())) {
-
-
-                                    CooldownManager.handleCooldown(player, "Avegmi", () -> {
-                                        AVEUGMI(player);
-                                    });
-
-
-                                } else {
-
-                                    player.sendMessage("§4 Vous n'avez pas cette compétennce !");
-
-                                }
-
-
-                            }
-
-
-
-
-                    }
-                }
-
-        }
-
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @EventHandler
@@ -146,44 +110,18 @@ public class Combat_Compétence implements Listener {
 
 
         Player player = event.getPlayer();
-        Json json = new Json(main);
-        Compétence compétence = new Compétence(main, connection, json);
-
-        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            if (event.getItem() != null && event.getItem().getType() == Material.BRICKS) {
-
-
-                if (event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§4BOUMBAA_MODE")) {
-
-                    if (event.getItem().getItemMeta().hasEnchants()) {
-
-
-                        if (compétence.Check_Competence("Boumbaa", "Combat", event.getPlayer())) {
 
 
 
-                            CooldownManager.handleCooldown(player,"Boumbaa", () -> {
-                                BOUMBOUM_EXECUTE_PLAYER(player);
-                            });
+        Constructor_Compétence constructorCompétence = new Constructor_Compétence(main,connection);
+        if(constructorCompétence.constructor_start_LEFT(event,"§4BOUMBAA_MODE","Boumbaa","Combat", Material.BRICKS)) {
 
 
-
-                        } else {
-
-
-                            player.sendMessage(ChatColor.RED + "Vous ne pouvez pas activer cette compétence car pas debloquer compétence :(");
+            CooldownManager.handleCooldown(player, "Boumbaa", () -> {
+                BOUMBOUM_EXECUTE_PLAYER(player);
+            });
 
 
-                        }
-
-
-                    }
-
-
-                }
-
-
-            }
 
 
         }
@@ -238,11 +176,11 @@ public class Combat_Compétence implements Listener {
 
 
         player.sendMessage("§4 Avegmi ACTIVATE");
-        CooldownManager.setCooldown(player.getUniqueId(), 10,"Avegmi");
+        CooldownManager.setCooldown(player.getUniqueId(), 200,"Avegmi");
 
         player.playSound(player.getLocation(), Sound.ENTITY_CAT_HISS, 2.0f, 2.5f);
 
-        double radius = 10.0;
+        double radius = 35.0;
 
         // Chercher les joueurs dans le rayon
         for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {
@@ -251,7 +189,7 @@ public class Combat_Compétence implements Listener {
                 player.sendMessage("§2 Tu as trouvé un joueur à moins de 10 blocs : " + target.getName());
 
                 // Exemple d'effet
-                target.sendMessage("§4 YOU ARE DEAD ");
+                target.sendMessage("§2 chaud chaud chocolat ");
                 target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 15, 0));
 
 
@@ -261,6 +199,8 @@ public class Combat_Compétence implements Listener {
         }
 
     }
+
+
 
 
 

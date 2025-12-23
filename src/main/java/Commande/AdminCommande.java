@@ -1,9 +1,6 @@
 package Commande;
 
-import Sauvegarde.Compétence;
-import Sauvegarde.Connection;
-import Sauvegarde.CooldownManager;
-import Sauvegarde.Json;
+import Sauvegarde.*;
 import fr.rabio.rPGPlugin.RPGPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -41,6 +38,50 @@ public class AdminCommande implements CommandExecutor {
                 return true;
 
             }
+
+
+
+
+            if (label.equals("mana")) {
+
+                Connection connection = new Connection(main);
+
+                Json json = new Json(main);
+                Compétence compétence = new Compétence(main,connection,json);
+
+
+                if (args.length >= 2) {
+                    if (args[0].equalsIgnoreCase("set")) {
+
+
+                        try {
+
+
+                            Mana mana = new Mana(main);
+
+                            mana.Set_Mana( Double.parseDouble(args[1]),player.getUniqueId());
+
+                        } catch (RuntimeException e) {
+                            player.sendMessage("§c il s'est produit un soucis par a port au Mana");
+                            player.sendMessage("§c le args utiliser est " + args[1]);
+
+                        }
+
+
+                    }
+
+                }
+
+                return true;
+
+            }
+
+
+
+
+
+
+
 
 
 

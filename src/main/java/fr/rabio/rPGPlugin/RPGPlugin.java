@@ -5,6 +5,7 @@ import Commande.Competence;
 import Commande.Level;
 import Commande.Xp;
 import Compétence.Combat_Compétence;
+import Compétence.Constructor_Compétence;
 import Niveau.*;
 
 import Sauvegarde.Connection;
@@ -33,6 +34,7 @@ public final class RPGPlugin extends JavaPlugin implements Listener {
         getCommand("oplevel").setExecutor(new AdminCommande(this));
         getCommand("allcompetence").setExecutor(new AdminCommande(this));
         getCommand("annulation").setExecutor(new AdminCommande(this));
+        getCommand("mana").setExecutor(new AdminCommande(this));
 
 
 
@@ -43,7 +45,7 @@ public final class RPGPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new Agriculture(this,connection,competence),this);
         getServer().getPluginManager().registerEvents(new Builder(this,connection,competence),this);
         getServer().getPluginManager().registerEvents(new Combat_Compétence(this,connection),this);
-
+        getServer().getPluginManager().registerEvents(new Constructor_Compétence(this,connection),this);
 
 
 
@@ -74,7 +76,8 @@ public final class RPGPlugin extends JavaPlugin implements Listener {
                             "competence VARCHAR(32) NOT NULL, " +
                             "level INT DEFAULT 0, " + "xp INT DEFAULT 0," +
                             "UNIQUE (uuid, competence)," +
-                            "abilities_unlocked LONGTEXT" +
+                            "abilities_unlocked LONGTEXT," +
+                            "Mana DOUBLE DEFAULT 0.0"+
                             ")"
             );
 

@@ -311,7 +311,7 @@ public class Connection implements Listener {
 
 
 
-                try {
+                try {  
 
                     PreparedStatement ps = Mysql.getConnection().prepareStatement(
                             "SELECT level,xp FROM joueurs_competences WHERE uuid = ? AND competence = ?"
@@ -368,6 +368,8 @@ public class Connection implements Listener {
             ps_xp.setString(2, uuid.toString());
             ps_xp.setString(3, competence);
             ps_xp.executeUpdate();
+
+
             System.out.println("Ajout effectuer");
             String message = "Fonction Ajouter Classe Connection";
 
@@ -762,13 +764,14 @@ public class Connection implements Listener {
 
 
                 PreparedStatement insert = Mysql.getConnection().prepareStatement(
-                        "INSERT INTO joueurs_competences (UUID,pseudo, competence,level,xp, abilities_unlocked) VALUES (?, ?, ?, ?, ?, ?)"
+                        "INSERT INTO joueurs_competences (UUID,pseudo, competence,level,xp, abilities_unlocked,mana) VALUES (?, ?, ?, ?, ?, ?,?)"
                 );
                 insert.setString(1, player.getUniqueId().toString());
                 insert.setString(2, player.getDisplayName());
                 insert.setString(3, competence);
                 insert.setInt(4,0);
                 insert.setInt(5,0);
+
 
                 player.sendMessage("truc apres innsert ");
                 // JSON vide ou valeurs de base
@@ -792,6 +795,7 @@ public class Connection implements Listener {
 
 
                 insert.setString(6, baseJson.toString());
+                insert.setDouble(7,0);
                 insert.executeUpdate();
 
 

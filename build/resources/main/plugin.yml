@@ -31,3 +31,11 @@ commands:
   opcompetence:
     description: Commande admin qui permet de gerer les coméptence
     usage: /opcompetence
+
+  annulation:
+    description: command admin qui permet de annuler le coldown des compétence utile pour teste
+    usage: /annulation [competence voulus] exemple /annulation rage_mode
+
+  mana:
+    description: command admin qui permet de connaitre son mana le manipuler en bref
+    usage: /mana set ou mana pour connaitre son mana 

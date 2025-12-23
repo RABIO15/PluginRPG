@@ -98,7 +98,7 @@ public class Compétence {
              */
             for (String key : section.getKeys(false)) {
 
-                player.sendMessage("§9 BOUCLE !!!!  " );
+
 
 
                     /*
